@@ -15,13 +15,23 @@ public class SingleListDemo {
         HeroNode hero6 = new HeroNode(6, "林冲", "豹子头");
         HeroNode hero7 = new HeroNode(7, "林冲", "豹子头");
         HeroNode hero8 = new HeroNode(8, "林冲", "豹子头");
+
         SingleLinkedList singleLinkedList = new SingleLinkedList();
+
+        //正常添加节点
+//        singleLinkedList.add(hero1);
+//        singleLinkedList.add(hero2);
+//        singleLinkedList.add(hero4);
+//        singleLinkedList.add(hero3);
+
+
+        //按顺序添加节点
         singleLinkedList.addByOrder(hero1);
         singleLinkedList.addByOrder(hero2);
         singleLinkedList.addByOrder(hero4);
         singleLinkedList.addByOrder(hero3);
-//
-//
+
+
 ////        System.out.println("修改操作开始");
 ////        HeroNode hero5 = new HeroNode(5, "林冲", "豹子头v2");
 ////        singleLinkedList.update(hero5);
@@ -35,9 +45,9 @@ public class SingleListDemo {
 //        System.out.println("链表的长度是"+singleLinkedList.getLength());
 //
 //
-        System.out.println("反转链表开始");
-        singleLinkedList.reversePrintV2(singleLinkedList.head);
-        singleLinkedList.list();
+//        System.out.println("反转链表开始");
+//        singleLinkedList.reversePrintV2(singleLinkedList.head);
+//        singleLinkedList.list();
 //
 //        System.out.println("逆序打印链表");
 //        singleLinkedList.reversePrintV1(singleLinkedList.head);
@@ -58,12 +68,15 @@ public class SingleListDemo {
 //        System.out.println("合并两个有序链表");
 //        HeroNode newHead = singleLinkedList.mergeLink(singleLinkedListV1.getHead(), singleLinkedListV2.getHead());
 //        singleLinkedList.listV2(newHead);
+
+        singleLinkedList.list();
     }
 
 }
 
 
 class SingleLinkedList {
+        //每一个链表都需要一个头节点，方便进行增、删、改、查
         HeroNode head = new HeroNode(0, "","");
 
 
@@ -71,6 +84,7 @@ class SingleLinkedList {
             return head;
         }
 
+        //插入链表
         public boolean add(HeroNode heroNode){
             HeroNode tmp = head;
 
@@ -207,6 +221,8 @@ class SingleLinkedList {
     }
 
 
+
+
     public static void reversePrintV1(HeroNode heroNode){
             if(heroNode.next == null){
                 return;
@@ -225,7 +241,12 @@ class SingleLinkedList {
     }
 
 
+    /**
+     * 反转节点
+     * @param head
+     */
     public static void reversePrintV2(HeroNode head){
+            //只有头节点或者只有一个节点，没必要进行反转
             if((head.next == null) || (head.next.next == null)){
                 return;
             }
@@ -233,7 +254,7 @@ class SingleLinkedList {
             HeroNode next = null;
             //创建一个辅助节点，以这个节点作为头指针形成一个新的链表
             HeroNode reverseNode = new HeroNode(0,"","");
-            while(cur != null){
+            while(cur != null){ //遍历每一个节点，并且把遍历过的节点都当作reverseNode的next节点，这样形成反转
                 //保存下一个指针
                 next = cur.next;
                 //把当前值的下一个指针指向辅助指针的下一个指针
@@ -287,7 +308,9 @@ class SingleLinkedList {
 
 }
 
-
+/**
+ * 单链表必备元素就是每个节点都有next
+ */
 @Data
 class HeroNode{
     private int no;
