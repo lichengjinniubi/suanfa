@@ -28,7 +28,10 @@ public class EmpList {
         }else{
             System.out.println("第"+no+"个链表的数据为:");
             Node curr = null;
-            for(curr = head; curr.next != null; curr = curr.next){
+            for(curr = this.head; ; curr = curr.next){
+                if(curr == null){
+                    break;
+                }
                 System.out.println(curr.name+"\n");
             }
         }
@@ -42,9 +45,8 @@ public class EmpList {
             return null;
         }else{
             Node curr = null;
-            for(curr = head; curr.id != id; curr = curr.next){
-                if(curr.next == null){
-                    curr = null;
+            for(curr = head; curr.next != null; curr = curr.next){
+                if(curr.id == id){
                     break;
                 }
             }

@@ -23,6 +23,24 @@ public class EmpHashTable {
     }
 
 
+    public void findById(int id){
+        int index = getIndex(id);
+        Node node = this.empLists[index].find(id);
+        if(node == null){
+            System.out.println("没有这个数据");
+        }else{
+            System.out.println(node.id+"---"+node.name);
+        }
+    }
+
+    public void list() {
+        for(int i = 0; i < this.size; ++i) {
+            this.empLists[i].list(i);
+        }
+
+    }
+
+
     public int getIndex(int num){
         return num % size;
     }
