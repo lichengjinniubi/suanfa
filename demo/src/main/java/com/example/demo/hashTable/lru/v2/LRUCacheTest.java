@@ -52,9 +52,6 @@ public class LRUCacheTest {
                 node.pre.next = node.next;
                 node.next.pre = node.pre;
                 node.next = node.pre = null;
-//                node.pre.next = node.next;
-//                node.next.pre = node.pre;
-//                node.next = node.pre = null;
             }
             size--;
         }
@@ -108,7 +105,9 @@ public class LRUCacheTest {
         }
 
 
+        cache.put(33,33);
         Map<Integer, Node> maps = cache.list();
+
         maps.forEach((k, v) -> {
             System.out.println(k + "=>" + v.key + "=>" + v.val);
         });

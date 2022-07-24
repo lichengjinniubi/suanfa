@@ -1,120 +1,280 @@
 package com.example.demo.hashTable.lru;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 
-public class LRUCache {
+public class LRUCache<TKey, TValue> {
 
-    // 双向链表节点定义
-    class Node {
-        int key;
-        int val;
-        Node prev;
-        Node next;
-    }
-    //模拟缓存容量
-    private int capacity;
-    //保存链表的头节点和尾节点
-    private Node first;
-    private Node last;
+    /**
+     * 缓存node结构 (双向链接)
+     *
+     * @param <TKey>   缓存node的key类型
+     * @param <TValue> 缓存node的value类型
+     */
+    private class Node<TKey, TValue> {
+        /**
+         * 双向链接node的前一个结点
+         */
+        private Node<TKey, TValue> prev;
 
-    //从key到node映射的map
-    private Map<Integer, Node> map;
+        /**
+         * 双向链接node的后一个结点
+         */
+        private Node<TKey, TValue> next;
 
-    public LRUCache(int capacity) {
-        this.capacity = capacity;
-        map = new HashMap<>(capacity);
-    }
+        /**
+         * 缓存的key
+         */
+        private TKey key;
 
-    public int get(int key) {
-        Node node = map.get(key);
-        //为空返回-1
-        if (node == null) {
-            return -1;
+        /**
+         * 缓存的value
+         */
+        private TValue value;
+
+        public Node() {
         }
-        moveToHead(node);
-        return node.val;
+
+        public Node(TKey key, TValue value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "key=" + key +
+                    ", value=" + value +
+                    '}';
+        }
     }
-    public void put(int key, int value) {
-        //先看看是否已经存在
-        Node node = map.get(key);
 
+    /**
+     * 增加Map来存储具体缓存项,来实现O(1)访问
+     */
+    private final Map<TKey, Node<TKey, TValue>> cache = new WeakHashMap<>();
+
+    /**
+     * 缓存最大数量
+     */
+    private final int capacity;
+    /**
+     * 当前缓存数量
+     */
+    private int size;
+
+    /**
+     * 双向链接的header
+     */
+    private final Node<TKey, TValue> header;
+
+    /**
+     * 双向链接的tail
+     */
+    private final Node<TKey, TValue> tail;
+
+    /**
+     * 获取缓存
+     *
+     * @param key 缓存key
+     * @return 缓存value
+     */
+    public TValue get(final TKey key) {
+        Node<TKey, TValue> node = cache.get(key);
         if (node == null) {
-            //不存在创建节点，然后判断缓存是否满了，如果满了删除最后一个节点。然后将新节点放到链表头部，增加一个映射关系
-            //存在则直接覆盖，然后移动到头部
-            node = new Node();
-            node.key = key;
-            node.val = value;
+            return null;
+        }
+        // 移到header
+        synchronized (cache) {
+            move2Header(node);
+        }
 
-            if(map.size() == capacity) {
-                removeLast();
+        return node.value;
+    }
+
+    /**
+     * 添加数据
+     *
+     * @param key   缓存key
+     * @param value 缓存value
+     */
+    public void put(final TKey key, final TValue value) {
+        Node<TKey, TValue> node = cache.get(key);
+        if (node == null) {
+            synchronized (cache) {
+                if (size >= capacity) {
+                    //删除尾部
+                    Node<TKey, TValue> expireNode = removeTail();
+                    cache.remove(expireNode.key);
+                    this.size--;
+                }
+
+                node = insertHeader(key, value);
+                cache.put(key, node);
+                this.size++;
             }
-
-            addToHead(node);
-            map.put(key, node);
         } else {
-            node.val = value;
-            moveToHead(node);
+            node.value = value;
+            synchronized (cache) {
+                move2Header(node);
+            }
         }
     }
 
-    private void moveToHead(Node node) {
-        //要修改很多指针
-        if (node == first) {
+    /**
+     * 移除缓存
+     *
+     * @param key 缓存key
+     */
+    public void remove(final TKey key) {
+        Node<TKey, TValue> node = cache.get(key);
+        if (node == null) {
             return;
-        } else if (node == last) {
-            //如果是最后一个节点，将最后一个节点的next指针置为空，然后last指向前一个节点
-            last.prev.next = null;
-            last = last.prev;
-        } else {
-            //如果是中间节点，中间节点的前节点的后指针  指向 中间节点的后节点
-            //中间节点的后节点的前指针 指向 中间节点的前节点
-            node.prev.next = node.next;
-            node.next.prev = node.prev;
         }
-        //把该节点作为头结点
-        node.prev = first.prev;// 写成node.prev = null;更好理解
-        node.next = first;
-        first.prev = node;
-        first = node;
-    }
-
-
-
-    private void addToHead(Node node) {
-        if (map.isEmpty()) {
-            first = node;
-            last = node;
-        } else {
-            //把新节点作为头结点
-            node.next = first;
-            first.prev = node;
-            first = node;
+        synchronized (cache) {
+            remove(node);
+            this.cache.remove(key);
+            this.size--;
         }
     }
 
-    private void removeLast() {
-        map.remove(last.key);
-        Node prevNode = last.prev;
-        //修改last所指的位置
-        if (prevNode != null) {
-            prevNode.next = null;
-            last = prevNode;
-        }
+    /**
+     * 添加缓存key/value到链表的header
+     *
+     * @param key   缓存key
+     * @param value 缓存value
+     */
+    private Node<TKey, TValue> insertHeader(final TKey key, final TValue value) {
+        Node<TKey, TValue> node = new Node<>(key, value);
+
+        return insertHeader(node);
+    }
+
+    /**
+     * 添加缓存node到链表的header
+     *
+     * @param node 缓存node
+     * @return 缓存node
+     */
+    private Node<TKey, TValue> insertHeader(final Node<TKey, TValue> node) {
+        node.prev = this.header;
+        node.next = this.header.next;
+        this.header.next.prev = node;
+        this.header.next = node;
+        return node;
+    }
+
+    /**
+     * 移动缓存node到header
+     *
+     * @param node 缓存node
+     */
+    private void move2Header(final Node<TKey, TValue> node) {
+        remove(node);
+        insertHeader(node);
+    }
+
+    /**
+     * 删除链表尾部
+     */
+    private Node<TKey, TValue> removeTail() {
+        Node<TKey, TValue> node = this.tail.prev;
+        remove(node);
+        return node;
+    }
+
+    /**
+     * 删除链表的node
+     */
+    private void remove(final Node<TKey, TValue> node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+    /**
+     * 添加缓存node到链表的tail
+     *
+     * @param key   缓存node的key
+     * @param value 缓存node的value
+     * @return 缓存node
+     */
+    private Node<TKey, TValue> putTail(final TKey key, final TValue value) {
+        Node<TKey, TValue> node = new Node<>(key, value);
+        return putTail(node);
+    }
+
+    /**
+     * 添加缓存node到链表的tail
+     *
+     * @param node 缓存node
+     * @return 缓存node
+     */
+    private Node<TKey, TValue> putTail(final Node<TKey, TValue> node) {
+        node.prev = this.tail.prev;
+        node.next = this.tail;
+        this.tail.prev.next = node;
+        this.tail.prev = node;
+        return node;
+    }
+
+    /**
+     * .ctor
+     *
+     * @param capacity 最大缓存数量
+     */
+    public LRUCache(final int capacity) {
+        this.capacity = capacity;
+        this.header = new Node<>();
+        this.tail = new Node<>();
+        this.header.next = this.tail;
+        this.header.prev = null;
+        this.tail.prev = this.header;
+        this.tail.next = null;
+        this.size = 0;
     }
 
     @Override
     public String toString() {
-        return map.keySet().toString();
+        Node<TKey, TValue> node = this.header.next;
+        StringBuilder sb = new StringBuilder();
+        sb.append("(size:");
+        sb.append(size);
+        sb.append(")");
+        while (node != this.tail) {
+            sb.append(node.key);
+            sb.append(":");
+            sb.append(node.value);
+            sb.append(",");
+            node = node.next;
+        }
+        // sb.append(cache.toString());
+        return sb.toString();
+    }
+
+    public void showCache(){
+        cache.forEach((k, v)->{
+            System.out.println(k);
+            System.out.println(v);
+            System.out.println(v.next);
+        });
     }
 
     public static void main(String[] args) {
-        LRUCache cache = new LRUCache(3);
-        cache.put(1, 1);//【1】左边是最近使用的
-        cache.put(2, 2);//【2，1】
-        cache.put(3, 3);//【3，2，1】
-        //cache.get(2);//【1，3，2】
-        //cache.put(4, 3);//【4，1，3】
+        LRUCache<String, String> cache = new LRUCache<>(4);
+        cache.put("key1", "value1");
         System.out.println(cache);
+        cache.put("key2", "value2");
+        System.out.println(cache);
+        cache.put("key1", "value3");
+        System.out.println(cache);
+        //cache.showCache();
+        cache.put("key4", "value4");
+        System.out.println(cache);
+        cache.put("key4", "value44");
+        System.out.println(cache);
+        cache.put("key5", "value5");
+        cache.get("key2");
+        System.out.println(cache);
+//        System.out.println(cache);
     }
 }
