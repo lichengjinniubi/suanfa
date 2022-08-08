@@ -1,5 +1,6 @@
 package com.example.demo.hashTable.lru;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -52,7 +53,7 @@ public class LRUCache<TKey, TValue> {
     /**
      * 增加Map来存储具体缓存项,来实现O(1)访问
      */
-    private final Map<TKey, Node<TKey, TValue>> cache = new WeakHashMap<>();
+    private final Map<TKey, Node<TKey, TValue>> cache = new HashMap<>();
 
     /**
      * 缓存最大数量
