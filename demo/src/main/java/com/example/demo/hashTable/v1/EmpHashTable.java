@@ -18,6 +18,7 @@ public class EmpHashTable {
 
     public boolean add(Node node){
         int num = getIndex(node.id);
+        System.out.println(num);
         this.empLists[num].add(node);
         return true;
     }
