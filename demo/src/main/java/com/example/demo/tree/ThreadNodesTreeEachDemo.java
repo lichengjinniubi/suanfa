@@ -1,19 +1,34 @@
 package com.example.demo.tree;
 
-public class BinaryTreeEachDemo {
+public class ThreadNodesTreeEachDemo {
 
     public static void main(String[] args) {
-        HeroNode root = new HeroNode(1, "11111");
-        HeroNode node2 = new HeroNode(2, "22222");
-        HeroNode node3 = new HeroNode(3, "33333");
-        HeroNode node4 = new HeroNode(4, "44444");
-        HeroNode node5 = new HeroNode(5, "55555");
 
+
+        HeroNodeV2 root = new HeroNodeV2(1, "tom");
+        HeroNodeV2 node2 = new HeroNodeV2(3, "jack");
+        HeroNodeV2 node3 = new HeroNodeV2(6, "smith");
+        HeroNodeV2 node4 = new HeroNodeV2(8, "mary");
+        HeroNodeV2 node5 = new HeroNodeV2(10, "king");
+        HeroNodeV2 node6 = new HeroNodeV2(14, "dim");
+
+        //����������������Ҫ�ݹ鴴��, ���ڼ򵥴���ʹ���ֶ�����
         root.setLeft(node2);
         root.setRight(node3);
-        node3.setRight(node4);
-        node3.setLeft(node5);
-        BinaryTree binaryTree = new BinaryTree();
+        node2.setLeft(node4);
+        node2.setRight(node5);
+        node3.setLeft(node6);
+//        HeroNodeV2 root = new HeroNodeV2(1, "11111");
+//        HeroNodeV2 node2 = new HeroNodeV2(2, "22222");
+//        HeroNodeV2 node3 = new HeroNodeV2(3, "33333");
+//        HeroNodeV2 node4 = new HeroNodeV2(4, "44444");
+//        HeroNodeV2 node5 = new HeroNodeV2(5, "55555");
+//
+//        root.setLeft(node2);
+//        root.setRight(node3);
+//        node3.setRight(node4);
+//        node3.setLeft(node5);
+        BinaryTreeV2 binaryTree = new BinaryTreeV2();
         binaryTree.setRoot(root);
 
         System.out.println("前序遍历二叉树&&&&&&&&&&&&");
@@ -27,7 +42,7 @@ public class BinaryTreeEachDemo {
         binaryTree.aftOrder();
 
         System.out.println("前序查找二叉树&&&&&&&&&&&&");
-        HeroNode resNode = binaryTree.preOrderSearch(19);
+        HeroNodeV2 resNode = binaryTree.preOrderSearch(19);
         if(resNode != null){
             System.out.printf("no =%s, name=%s", resNode.getNo(), resNode.getName());
         }else{
@@ -37,7 +52,7 @@ public class BinaryTreeEachDemo {
 
 
         System.out.println("中序查找二叉树&&&&&&&&&&&&");
-        HeroNode resNodeV2 = binaryTree.midOrderSearch(1);
+        HeroNodeV2 resNodeV2 = binaryTree.midOrderSearch(1);
         if(resNodeV2 != null){
             System.out.printf("no =%s, name=%s", resNodeV2.getNo(), resNodeV2.getName());
         }else{
@@ -47,7 +62,7 @@ public class BinaryTreeEachDemo {
 
 
         System.out.println("后序查找二叉树&&&&&&&&&&&&");
-        HeroNode resNodeV3 = binaryTree.aftOrderSearch(1);
+        HeroNodeV2 resNodeV3 = binaryTree.aftOrderSearch(1);
         if(resNodeV3 != null){
             System.out.printf("no =%s, name=%s", resNodeV3.getNo(), resNodeV3.getName());
         }else{
@@ -61,15 +76,34 @@ public class BinaryTreeEachDemo {
         binaryTree.delNode(2);
         System.out.println("二叉树删除之后前序遍历");
         binaryTree.preOrder();
+
+
+
+        System.out.println("中序线索化二叉树操作");
+        BinaryTreeV2 binaryTreeV2 = new BinaryTreeV2();
+        binaryTreeV2.setRoot(root);
+        binaryTreeV2.threadNodes();
+
+        HeroNodeV2 leftNode = node5.getLeft();
+        HeroNodeV2 rightNode = node5.getRight();
+        System.out.println("左子树 ="  + leftNode); //3
+        System.out.println("右子树 ="  + rightNode); //1
+
+
+        System.out.println("中序遍历线索化二叉树");
+        binaryTreeV2.threadedList();
+
     }
 }
 
 
-class BinaryTree{
+class BinaryTreeV2{
 
-    private HeroNode root;
+    private HeroNodeV2 root;
 
-    public void setRoot(HeroNode root) {
+    private HeroNodeV2 pre = null;
+
+    public void setRoot(HeroNodeV2 root) {
         this.root = root;
     }
 
@@ -111,7 +145,7 @@ class BinaryTree{
     }
 
 
-    public HeroNode preOrderSearch(int no){
+    public HeroNodeV2 preOrderSearch(int no){
         if(this.root != null){
             return this.root.preOrderSearch(no);
         }else{
@@ -120,7 +154,7 @@ class BinaryTree{
     }
 
 
-    public HeroNode midOrderSearch(int no){
+    public HeroNodeV2 midOrderSearch(int no){
         if(this.root != null){
             return this.root.midOrderSearch(no);
         }else{
@@ -129,11 +163,71 @@ class BinaryTree{
     }
 
 
-    public HeroNode aftOrderSearch(int no){
+    public HeroNodeV2 aftOrderSearch(int no){
         if(this.root != null){
             return this.root.aftOrderSearch(no);
         }else{
             return null;
+        }
+    }
+
+    public void threadNodes(){
+        threadNodes(root);
+    }
+
+    /**
+     * 中序生成线索化二叉树
+     * @param node
+     */
+    public void threadNodes(HeroNodeV2 node){
+        if(node == null){
+            return;
+        }
+
+        //由于是中序遍历，优先把左子树进行递归
+        threadNodes(node.getLeft());
+
+        if(node.getLeft() == null){ //已经是叶子节点
+            node.setLeftType(1);
+            node.setLeft(pre);
+        }
+
+        if(pre != null && pre.getRight() == null){
+            pre.setRight(node);
+            pre.setRightType(1);
+        }
+
+        pre = node;
+
+        threadNodes(node.getRight());
+
+
+
+    }
+
+    /**
+     * 中序遍历线索化二叉树
+     */
+    public void threadedList() {
+        HeroNodeV2 node = root;
+        while(node != null) {
+
+            while(node.getLeftType() == 0) {
+                node = node.getLeft();
+            }
+
+
+            System.out.println(node);
+//            System.out.println(node.getLeft());
+//            System.out.println(node.getRight());
+//            System.out.println("++++++++++++++++++");
+
+            while(node.getRightType() == 1) {
+                node = node.getRight();
+                System.out.println(node);
+            }
+            node = node.getRight();
+
         }
     }
 }
@@ -141,13 +235,17 @@ class BinaryTree{
 /**
  * 每一个节点
  */
-class HeroNode{
+class HeroNodeV2{
     private int no;
     private String name;
-    private HeroNode left;
-    private HeroNode right;
+    private HeroNodeV2 left;
+    private HeroNodeV2 right;
 
-    public HeroNode(int no, String name) {
+    //增加两个属性表示左节点和右节点分别指向那里
+    private int leftType; //0:指向左子节点 1：指向前驱节点
+    private int rightType; //0:指向左子节点 1：指向前驱节点
+
+    public HeroNodeV2(int no, String name) {
         this.no = no;
         this.name = name;
     }
@@ -168,20 +266,36 @@ class HeroNode{
         this.name = name;
     }
 
-    public HeroNode getLeft() {
+    public HeroNodeV2 getLeft() {
         return left;
     }
 
-    public void setLeft(HeroNode left) {
+    public void setLeft(HeroNodeV2 left) {
         this.left = left;
     }
 
-    public HeroNode getRight() {
+    public HeroNodeV2 getRight() {
         return right;
     }
 
-    public void setRight(HeroNode right) {
+    public void setRight(HeroNodeV2 right) {
         this.right = right;
+    }
+
+    public int getLeftType() {
+        return leftType;
+    }
+
+    public void setLeftType(int leftType) {
+        this.leftType = leftType;
+    }
+
+    public int getRightType() {
+        return rightType;
+    }
+
+    public void setRightType(int rightType) {
+        this.rightType = rightType;
     }
 
     @Override
@@ -191,6 +305,8 @@ class HeroNode{
                 ", name='" + name + '\'' +
                 '}';
     }
+
+
 
     /**
      * 删除二叉树的节点
@@ -244,11 +360,11 @@ class HeroNode{
     public void midOrder(){
 
         if(this.left != null){
-            this.left.preOrder();
+            this.left.midOrder();
         }
         System.out.println(this);
         if(this.right != null){
-            this.right.preOrder();
+            this.right.midOrder();
         }
     }
 
@@ -258,24 +374,25 @@ class HeroNode{
     public void aftOrder(){
 
         if(this.left != null){
-            this.left.preOrder();
+            this.left.aftOrder();
         }
 
         if(this.right != null){
-            this.right.preOrder();
+            this.right.aftOrder();
         }
-
         System.out.println(this);
+
+
     }
 
 
 
-    public HeroNode preOrderSearch(int no){
+    public HeroNodeV2 preOrderSearch(int no){
         if(this.no == no){
             return this;
         }
 
-        HeroNode heroNode = null;
+        HeroNodeV2 heroNode = null;
         if(this.left != null){
             heroNode = this.left.preOrderSearch(no);
         }
@@ -292,10 +409,10 @@ class HeroNode{
     }
 
 
-    public HeroNode midOrderSearch(int no){
+    public HeroNodeV2 midOrderSearch(int no){
 
 
-        HeroNode heroNode = null;
+        HeroNodeV2 heroNode = null;
         if(this.left != null){
             heroNode = this.left.preOrderSearch(no);
         }
@@ -316,10 +433,10 @@ class HeroNode{
     }
 
 
-    public HeroNode aftOrderSearch(int no){
+    public HeroNodeV2 aftOrderSearch(int no){
 
 
-        HeroNode heroNode = null;
+        HeroNodeV2 heroNode = null;
         if(this.left != null){
             heroNode = this.left.preOrderSearch(no);
         }
