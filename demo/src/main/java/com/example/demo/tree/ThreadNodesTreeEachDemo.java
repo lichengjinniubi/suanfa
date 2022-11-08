@@ -176,6 +176,9 @@ class BinaryTreeV2{
     }
 
     /**
+     * 1、线索话二叉树在节点对象HeroNodeV2中新增加了两个属性leftType和rightType用来标识节点左右指向的是左右节点，还是前驱节点或者后继节点
+     * 2、在线索话的过程中增加一个pre属性，每遍历一个节点就把当前节点赋值给pre,方便当前节点的在设置右节点的时候使用
+     * 3、具体可以看代码的实现，同时要理解线索话二叉树的过程
      * 中序生成线索化二叉树
      * @param node
      */
@@ -188,17 +191,20 @@ class BinaryTreeV2{
         threadNodes(node.getLeft());
 
         if(node.getLeft() == null){ //已经是叶子节点
-            node.setLeftType(1);
-            node.setLeft(pre);
+            node.setLeftType(1); //设置为指向前驱节点
+            node.setLeft(pre); //把前驱节点指向pre
         }
 
+        //在进行后继节点判断时候由于二叉树是单向的，在当前节点已经无法知道前驱节点，所以只能每次记录前驱节点，并且每遍历一个节点都把当前节点赋值给pre
         if(pre != null && pre.getRight() == null){
             pre.setRight(node);
             pre.setRightType(1);
         }
 
+        //非常重要的一个步骤，每遍历一个节点都把赋值给pre,方便下一个节点使用
         pre = node;
 
+        //由于是中序遍历，最后进行右子树的递归
         threadNodes(node.getRight());
 
 
@@ -212,20 +218,25 @@ class BinaryTreeV2{
         HeroNodeV2 node = root;
         while(node != null) {
 
+            //一直找leftType等于0的，知道找到最后一个阶段
             while(node.getLeftType() == 0) {
                 node = node.getLeft();
             }
 
 
             System.out.println(node);
-//            System.out.println(node.getLeft());
-//            System.out.println(node.getRight());
-//            System.out.println("++++++++++++++++++");
+            System.out.println(node.getLeft());
+            System.out.println(node.getRight());
+            System.out.println("++++++++++++++++++");
 
+            //一直找rightType等于1，只要还等于1就表明右指针指向的值就是当前节点的后继节点，直到出现不等1的
             while(node.getRightType() == 1) {
                 node = node.getRight();
                 System.out.println(node);
+                System.out.println("---------");
             }
+
+            //如果出现不等于1的情况则直接去右节点就可以
             node = node.getRight();
 
         }

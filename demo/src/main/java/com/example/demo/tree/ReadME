@@ -1,3 +1,4 @@
 ####
-    BinaryTreeEachDemo是用来演示基本的二叉树前序遍历/查找，中序遍历/查找，后序遍历/查找，删除二叉树节点
-    ThreadNodesTreeEachDemo是用来演示中序生成和遍历线索化二叉树
+    1、BinaryTreeEachDemo是用来演示基本的二叉树前序遍历/查找，中序遍历/查找，后序遍历/查找，删除二叉树节点
+    2、ThreadNodesTreeEachDemo是用来演示中序生成和遍历线索化二叉树
+    3、ArrBinaryTreeDEmo演示的是用前序，后序和中序遍历的方式打印数组
