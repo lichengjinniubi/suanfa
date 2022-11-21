@@ -78,6 +78,7 @@ public class HeapSort {
                 break;//
             }
         }
+
         //
         arr[i] = temp;//��tempֵ�ŵ��������λ��
     }
