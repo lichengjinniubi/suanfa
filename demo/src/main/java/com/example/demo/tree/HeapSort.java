@@ -61,6 +61,8 @@ public class HeapSort {
 
     }
 
+
+
    //看不懂就debug看一下把，配合着资料
     public  static void adjustHeap(int arr[], int i, int lenght) {
 
