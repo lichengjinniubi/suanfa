@@ -11,6 +11,8 @@ public class ThreadNodesTreeEachDemo {
         HeroNodeV2 node4 = new HeroNodeV2(8, "mary");
         HeroNodeV2 node5 = new HeroNodeV2(10, "king");
         HeroNodeV2 node6 = new HeroNodeV2(14, "dim");
+        HeroNodeV2 node7 = new HeroNodeV2(15, "dim");
+        HeroNodeV2 node8 = new HeroNodeV2(16, "dim");
 
         //����������������Ҫ�ݹ鴴��, ���ڼ򵥴���ʹ���ֶ�����
         root.setLeft(node2);
@@ -18,6 +20,8 @@ public class ThreadNodesTreeEachDemo {
         node2.setLeft(node4);
         node2.setRight(node5);
         node3.setLeft(node6);
+//        node4.setLeft(node7);
+//        node4.setRight(node8);
 //        HeroNodeV2 root = new HeroNodeV2(1, "11111");
 //        HeroNodeV2 node2 = new HeroNodeV2(2, "22222");
 //        HeroNodeV2 node3 = new HeroNodeV2(3, "33333");
@@ -28,54 +32,54 @@ public class ThreadNodesTreeEachDemo {
 //        root.setRight(node3);
 //        node3.setRight(node4);
 //        node3.setLeft(node5);
-        BinaryTreeV2 binaryTree = new BinaryTreeV2();
-        binaryTree.setRoot(root);
-
-        System.out.println("前序遍历二叉树&&&&&&&&&&&&");
-        binaryTree.preOrder();
-
-
-        System.out.println("中序遍历二叉树&&&&&&&&&&&&");
-        binaryTree.midOrder();
-
-        System.out.println("后序遍历二叉树&&&&&&&&&&&&");
-        binaryTree.aftOrder();
-
-        System.out.println("前序查找二叉树&&&&&&&&&&&&");
-        HeroNodeV2 resNode = binaryTree.preOrderSearch(19);
-        if(resNode != null){
-            System.out.printf("no =%s, name=%s", resNode.getNo(), resNode.getName());
-        }else{
-            System.out.println("未查找到数据");
-        }
-
-
-
-        System.out.println("中序查找二叉树&&&&&&&&&&&&");
-        HeroNodeV2 resNodeV2 = binaryTree.midOrderSearch(1);
-        if(resNodeV2 != null){
-            System.out.printf("no =%s, name=%s", resNodeV2.getNo(), resNodeV2.getName());
-        }else{
-            System.out.println("未查找到数据");
-        }
-
-
-
-        System.out.println("后序查找二叉树&&&&&&&&&&&&");
-        HeroNodeV2 resNodeV3 = binaryTree.aftOrderSearch(1);
-        if(resNodeV3 != null){
-            System.out.printf("no =%s, name=%s", resNodeV3.getNo(), resNodeV3.getName());
-        }else{
-            System.out.println("未查找到数据");
-        }
-
-
-        System.out.println("删除二叉树&&&&&&&&&&&&");
-        System.out.println("二叉树删除之前前序遍历");
-        binaryTree.preOrder();
-        binaryTree.delNode(2);
-        System.out.println("二叉树删除之后前序遍历");
-        binaryTree.preOrder();
+//        BinaryTreeV2 binaryTree = new BinaryTreeV2();
+//        binaryTree.setRoot(root);
+////
+//        System.out.println("前序遍历二叉树&&&&&&&&&&&&");
+//        binaryTree.preOrder();
+//
+//
+//        System.out.println("中序遍历二叉树&&&&&&&&&&&&");
+//        binaryTree.midOrder();
+//
+//        System.out.println("后序遍历二叉树&&&&&&&&&&&&");
+//        binaryTree.aftOrder();
+//
+//        System.out.println("前序查找二叉树&&&&&&&&&&&&");
+//        HeroNodeV2 resNode = binaryTree.preOrderSearch(19);
+//        if(resNode != null){
+//            System.out.printf("no =%s, name=%s", resNode.getNo(), resNode.getName());
+//        }else{
+//            System.out.println("未查找到数据");
+//        }
+//
+//
+//
+//        System.out.println("中序查找二叉树&&&&&&&&&&&&");
+//        HeroNodeV2 resNodeV2 = binaryTree.midOrderSearch(1);
+//        if(resNodeV2 != null){
+//            System.out.printf("no =%s, name=%s", resNodeV2.getNo(), resNodeV2.getName());
+//        }else{
+//            System.out.println("未查找到数据");
+//        }
+//
+//
+//
+//        System.out.println("后序查找二叉树&&&&&&&&&&&&");
+//        HeroNodeV2 resNodeV3 = binaryTree.aftOrderSearch(1);
+//        if(resNodeV3 != null){
+//            System.out.printf("no =%s, name=%s", resNodeV3.getNo(), resNodeV3.getName());
+//        }else{
+//            System.out.println("未查找到数据");
+//        }
+//
+//
+//        System.out.println("删除二叉树&&&&&&&&&&&&");
+//        System.out.println("二叉树删除之前前序遍历");
+//        binaryTree.preOrder();
+//        binaryTree.delNode(2);
+//        System.out.println("二叉树删除之后前序遍历");
+//        binaryTree.preOrder();
 
 
 
@@ -84,14 +88,29 @@ public class ThreadNodesTreeEachDemo {
         binaryTreeV2.setRoot(root);
         binaryTreeV2.threadNodes();
 
-        HeroNodeV2 leftNode = node5.getLeft();
-        HeroNodeV2 rightNode = node5.getRight();
-        System.out.println("左子树 ="  + leftNode); //3
-        System.out.println("右子树 ="  + rightNode); //1
+//        HeroNodeV2 leftNode = node5.getLeft();
+//        HeroNodeV2 rightNode = node5.getRight();
+//        System.out.println("左子树 ="  + leftNode); //3
+//        System.out.println("右子树 ="  + rightNode); //1
 
 
         System.out.println("中序遍历线索化二叉树");
+        binaryTreeV2.setRoot(root);
         binaryTreeV2.threadedList();
+
+
+
+//        System.out.println("前序线索化二叉树操作&^&^&^&^&^&^&^");
+//        BinaryTreeV2 binaryTreeV2 = new BinaryTreeV2();
+//        binaryTreeV2.threadNodesV2(root);
+//
+//        HeroNodeV2 leftNode = node7.getLeft();
+//        HeroNodeV2 rightNode = node7.getRight();
+//        System.out.println("左子树 ="  + leftNode); //8
+//        System.out.println("右子树 ="  + rightNode); //16
+
+
+
 
     }
 }
@@ -207,8 +226,66 @@ class BinaryTreeV2{
         //由于是中序遍历，最后进行右子树的递归
         threadNodes(node.getRight());
 
+    }
 
 
+    public void threadNodesV2(HeroNodeV2 node){
+
+        if(node == null){
+            return;
+        }
+
+
+
+        if (node.getLeft() == null) {
+           node.setLeftType(1);
+           node.setLeft(pre);
+        }
+
+        if(pre != null && pre.getRight() == null){
+            pre.setRightType(1);
+            pre.setRight(node);
+        }
+
+        pre = node;
+
+        System.out.println(node);
+        System.out.println(node.getLeftType());
+        System.out.println(node.getRightType());
+        System.out.println("***************");
+
+        if(node.getLeftType() != 1){
+            threadNodesV2(node.getLeft());
+        }
+
+
+        if(node.getRightType() != 1){
+            threadNodesV2(node.getRight());
+        }
+
+
+
+    }
+
+    public void threadList(){
+        HeroNodeV2 node = root;
+        while (node != null){
+
+            //一直找leftType等于0的，知道找到最后一个节点
+            while(node.getLeftType() == 0){
+                node = node.getLeft();
+            }
+
+            System.out.println(node.getLeft());
+
+
+            //rightType等于1就表明right节点就是下一个节点
+            while (node.getRightType() == 1) {
+                node = node.getRight();
+            }
+
+            node = node.getRight();
+        }
     }
 
     /**
@@ -216,24 +293,21 @@ class BinaryTreeV2{
      */
     public void threadedList() {
         HeroNodeV2 node = root;
-        while(node != null) {
 
-            //一直找leftType等于0的，知道找到最后一个阶段
+        while(node != null) {
+            //System.out.println(node);
+            //一直找leftType等于0的，知道找到最后一个节点
             while(node.getLeftType() == 0) {
                 node = node.getLeft();
             }
 
-
+            System.out.println("%%%%%%%%%%%%%%%%%%%%%");
             System.out.println(node);
-            System.out.println(node.getLeft());
-            System.out.println(node.getRight());
-            System.out.println("++++++++++++++++++");
+
 
             //一直找rightType等于1，只要还等于1就表明右指针指向的值就是当前节点的后继节点，直到出现不等1的
             while(node.getRightType() == 1) {
                 node = node.getRight();
-                System.out.println(node);
-                System.out.println("---------");
             }
 
             //如果出现不等于1的情况则直接去右节点就可以
