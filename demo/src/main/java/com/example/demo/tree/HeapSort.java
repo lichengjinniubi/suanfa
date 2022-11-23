@@ -8,18 +8,12 @@ public class HeapSort {
         //Ҫ�����������������
         //int arr[] = {4, 6, 8, 5, 9};
         // ����Ҫ��80000�������������
-        int[] arr = new int[8];
+        //int[] arr = new int[8];
 //        for (int i = 0; i < 8; i++) {
 //            arr[i] = i+ (int) (Math.random() * 10); // ����һ��[0, 8000000) ��
 //        }
-        arr[0] = 3;
-        arr[1] = 2;
-        arr[2] = 7;
-        arr[3] = 4;
-        arr[4] = 5;
-        arr[5] = 6;
-        arr[6] = 1;
-        arr[7] = 8;
+
+        int[] arr = {3,2,7,4,5,6,1,8};
 
 //        System.out.println("����ǰ");
 //        Date data1 = new Date();
@@ -60,7 +54,6 @@ public class HeapSort {
         System.out.println("排序之后数组=" + Arrays.toString(arr));
 
     }
-
 
 
    //看不懂就debug看一下把，配合着资料
