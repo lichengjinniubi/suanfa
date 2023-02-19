@@ -15,7 +15,7 @@ public class EmpList {
     }
 
     public void add(Node node){
-        if(this.head.next == this.tail){ //头节点就存储实际数据，故而不需要初始化头节点
+        if(this.head.next == this.tail){ //表明是这个链表中第一次插入数据
             System.out.println(8888888);
             node.next = this.head.next;
             this.tail.prev = node;

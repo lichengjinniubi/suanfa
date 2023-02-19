@@ -27,7 +27,7 @@ public class CircleDoubleListDemo {
 //        circleDoubleLinkedList.addByOrder(hero4);
 //        circleDoubleLinkedList.addByOrder(hero3);
 
-        circleDoubleLinkedList.listV3();
+        //circleDoubleLinkedList.listV3();
         //顺序添加节点
 //        singleLinkedList.addByOrder(hero1);
 //        singleLinkedList.addByOrder(hero2);
@@ -50,8 +50,9 @@ public class CircleDoubleListDemo {
 //        System.out.println("链表的长度是"+singleLinkedList.getLength());
 ////
 ////
-//        System.out.println("反转链表开始");
-//        singleLinkedList.reversePrintV2(singleLinkedList.head);
+        circleDoubleLinkedList.listV3();
+        System.out.println("反转链表开始");
+        circleDoubleLinkedList.reversePrintV2();
 //        singleLinkedList.list();
 //
 //        System.out.println("逆序打印链表");
@@ -73,6 +74,10 @@ public class CircleDoubleListDemo {
 //        System.out.println("合并两个有序链表");
 //        HeroNode4 newHead = singleLinkedList.mergeLink(singleLinkedListV1.getHead(), singleLinkedListV2.getHead());
 //        singleLinkedList.listV2(newHead);
+
+        circleDoubleLinkedList.listV3();
+
+        //circleDoubleLinkedList.list();
     }
 
 }
@@ -293,15 +298,19 @@ class CircleDoubleLinkedList {
     }
 
 
-    public static void reversePrintV2(HeroNode4 head){
-        if((head.next == null) || (head.next.next == null)){
+    public void reversePrintV2(){
+        if((first == null) || (first.next == null)){
             return;
         }
-        HeroNode4 cur = head.next;
+        HeroNode4 cur = first;
         HeroNode4 next = null;
+        HeroNode4 tail = null;
         //创建一个辅助节点，以这个节点作为头指针形成一个新的链表
         HeroNode4 reverseNode = new HeroNode4(0,"","");
-        while(cur != null){
+        while(true){
+            if(cur == first){
+                tail = first;
+            }
             //保存下一个指针
             next = cur.next;
 
@@ -319,10 +328,17 @@ class CircleDoubleLinkedList {
             reverseNode.next = cur;
             //当前值指向下一个指针
             cur = next;
+
+            if(cur.next == first){
+                first = cur;
+                break;
+            }
         }
         //之前链表头节点的下一个指针指向新链表头节点的下一个指针
-        reverseNode.getNext().pre = head;
-        head.next = reverseNode.getNext();
+        reverseNode.getNext().pre = first;
+        first.pre = tail;
+        first.next = reverseNode.getNext();
+        tail.next = first;
     }
 
 

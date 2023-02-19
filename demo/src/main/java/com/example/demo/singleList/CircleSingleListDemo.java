@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.util.Stack;
 
+
+/**
+ * 循环链表
+ */
 public class CircleSingleListDemo {
 
     public static void main(String[] args) {
@@ -16,33 +20,35 @@ public class CircleSingleListDemo {
         HeroNode3 hero7 = new HeroNode3(7, "林冲", "豹子头");
         HeroNode3 hero8 = new HeroNode3(8, "林冲", "豹子头");
         CirccleSingleLinkedList singleLinkedList = new CirccleSingleLinkedList();
-//        singleLinkedList.addByOrder(hero1);
-//        singleLinkedList.addByOrder(hero2);
-//        singleLinkedList.addByOrder(hero4);
-//        singleLinkedList.addByOrder(hero3);
-        singleLinkedList.addV2(5);
+        singleLinkedList.addV3(hero1);
+        singleLinkedList.addV3(hero2);
+        singleLinkedList.addV3(hero4);
+        singleLinkedList.addV3(hero3);
+        //singleLinkedList.addV2(5);
+
+
+
+        //singleLinkedList.getHero(1, 2, 5);
+//
+//
+//        System.out.println("修改操作开始");
+//        HeroNode3 newHero5 = new HeroNode3(4, "林冲", "豹子头v2");
+//        singleLinkedList.update(newHero5);
+////
+////
+//        System.out.println("删除操作开始");
+//        singleLinkedList.del(2);
+        //singleLinkedList.list();
+//
+//
+        //System.out.println("链表的长度是"+singleLinkedList.getLength());
+//
+//
 
         singleLinkedList.list();
-
-        singleLinkedList.getHero(1, 2, 5);
-//
-//
-////        System.out.println("修改操作开始");
-////        HeroNode3 hero5 = new HeroNode3(5, "林冲", "豹子头v2");
-////        singleLinkedList.update(hero5);
-////
-////
-////        System.out.println("删除操作开始");
-////        singleLinkedList.del(2);
-////        singleLinkedList.list();
-//
-//
-//        System.out.println("链表的长度是"+singleLinkedList.getLength());
-//
-//
-//        System.out.println("反转链表开始");
-//        singleLinkedList.reversePrintV2(singleLinkedList.head);
-//        singleLinkedList.list();
+        System.out.println("反转链表开始");
+        singleLinkedList.reversePrintV2();
+        //singleLinkedList.list();
 //
 //        System.out.println("逆序打印链表");
 //        singleLinkedList.reversePrintV1(singleLinkedList.head);
@@ -63,6 +69,9 @@ public class CircleSingleListDemo {
 //        System.out.println("合并两个有序链表");
 //        HeroNode3 newHead = singleLinkedList.mergeLink(singleLinkedListV1.getHead(), singleLinkedListV2.getHead());
 //        singleLinkedList.listV2(newHead);
+
+
+        singleLinkedList.list();
     }
 
 }
@@ -88,6 +97,22 @@ class CirccleSingleLinkedList {
                 heroNode3.setNext(first);
                 tmp = heroNode3;
             }
+            return true;
+        }
+
+
+        public boolean addV3(HeroNode3 heroNode3){
+            if(first == null){ //第一个节点如果为null,表示整个链表为空
+                first = heroNode3;
+                heroNode3.next = first;
+                tmp = first;
+            }else{
+                tmp.setNext(heroNode3);
+                heroNode3.setNext(first);
+                tmp = heroNode3;
+
+            }
+
             return true;
         }
 
@@ -185,14 +210,13 @@ class CirccleSingleLinkedList {
 
         public boolean update(HeroNode3 HeroNode3){
 
-            HeroNode3 tmp = head;
-
+            HeroNode3 tmp = first;
             while(true){
                 if(tmp == null){
                     break;
                 }
-
                 if(tmp.getNo() == HeroNode3.getNo()){
+                    System.out.println(44444);
                     tmp.setName(HeroNode3.getName());
                     tmp.setNickName(HeroNode3.getNickName());
                     break;
@@ -206,7 +230,7 @@ class CirccleSingleLinkedList {
 
         public boolean del(int no){
 
-            HeroNode3 tmp = head;
+            HeroNode3 tmp = first;
             while(true){
                 if(tmp == null){
                     break;
@@ -258,10 +282,10 @@ class CirccleSingleLinkedList {
 
 
         public int getLength(){
-            HeroNode3 tmp = head.next;
-            int i = 0;
+            HeroNode3 tmp = first.next;
+            int i = 1;
             while(true){
-                if(tmp == null){
+                if(tmp == first){
                     break;
                 }
                 i++;
@@ -305,26 +329,39 @@ class CirccleSingleLinkedList {
     }
 
 
-    public static void reversePrintV2(HeroNode3 head){
-            if((head.next == null) || (head.next.next == null)){
+    public void reversePrintV2(){
+            if((first == null) || (first.next == null)){
                 return;
             }
-            HeroNode3 cur = head.next;
+            HeroNode3 cur = first;
             HeroNode3 next = null;
+            HeroNode3 tail = null;
             //创建一个辅助节点，以这个节点作为头指针形成一个新的链表
             HeroNode3 reverseNode = new HeroNode3(0,"","");
-            while(cur != null){
+            while(true){
+                if(cur == first){
+                    tail = first;
+                }
                 //保存下一个指针
                 next = cur.next;
                 //把当前值的下一个指针指向辅助指针的下一个指针
                 cur.next = reverseNode.next;
                 //辅助指针的下一个指针指向当前指针，这样当前值就在新链表的第一位
                 reverseNode.next = cur;
+
                 //当前值指向下一个指针
                 cur = next;
+                if(cur.next == first){ //已经到了最后一个节点
+                    first = cur;
+                    break;
+                }
+
             }
+
             //之前链表头节点的下一个指针指向新链表头节点的下一个指针
-            head.next = reverseNode.getNext();
+            first.next = reverseNode.getNext();
+
+            tail.next = first;
     }
 
 

@@ -37,7 +37,7 @@ public class DoubleListDemo {
 
 //        System.out.println("删除操作开始");
 //        singleLinkedList.del(2);
-        //singleLinkedList.list();
+//        singleLinkedList.list();
 
 
 
@@ -52,7 +52,7 @@ public class DoubleListDemo {
 //        singleLinkedList.reversePrintV1(singleLinkedList.head);
 
 
-
+        //合并两个双向链表
         DoubleLinkedList singleLinkedListV1 = new DoubleLinkedList();
         singleLinkedListV1.addByOrder(hero1);
         singleLinkedListV1.addByOrder(hero3);
@@ -177,8 +177,9 @@ class DoubleLinkedList {
                 if(tmp == null){
                     break;
                 }
-                System.out.println(tmp);
                 System.out.println(tmp.pre);
+                System.out.println(tmp);
+                System.out.println(tmp.next);
                 System.out.println("--------");
                 tmp = tmp.getNext();
             }
@@ -194,8 +195,9 @@ class DoubleLinkedList {
             if(tmp == null){
                 break;
             }
-            System.out.println(tmp);
             System.out.println(tmp.pre);
+            System.out.println(tmp);
+            System.out.println(tmp.next);
             System.out.println("------------------");
             tmp = tmp.getNext();
         }
@@ -259,29 +261,73 @@ class DoubleLinkedList {
         //创建一个辅助节点，以这个节点作为头指针形成一个新的链表
         HeroNode2 reverseNode = new HeroNode2(0,"","");
         while(cur != null){
-            //保存下一个指针
+
             next = cur.next;
 
-            //把当前值的下一个指针指向辅助指针的下一个指针
+
             cur.next = reverseNode.next;
-            cur.pre = reverseNode;
-
-
+            cur.pre =reverseNode;
             if(reverseNode.next != null){
-                //新链表的第一个节点指针的前一个指针指向当前指针
                 reverseNode.next.pre = cur;
             }
 
-            //辅助指针的下一个指针指向当前指针，这样当前值就在新链表的第一位
             reverseNode.next = cur;
-            //当前值指向下一个指针
+
             cur = next;
+
+
+//            //保存下一个指针
+//            next = cur.next;
+//
+//            //把当前值的下一个指针指向辅助指针的下一个指针
+//            cur.next = reverseNode.next;
+//            cur.pre = reverseNode;
+//
+//
+//            if(reverseNode.next != null){
+//                //新链表的第一个节点指针的前一个指针指向当前指针
+//                reverseNode.next.pre = cur;
+//            }
+//
+//            //辅助指针的下一个指针指向当前指针，这样当前值就在新链表的第一位
+//            reverseNode.next = cur;
+//            //当前值指向下一个指针
+//            cur = next;
         }
         //之前链表头节点的下一个指针指向新链表头节点的下一个指针
         reverseNode.getNext().pre = head;
         head.next = reverseNode.getNext();
     }
 
+
+    public static HeroNode2 mergeLinkV2(HeroNode2 head1, HeroNode2 head2){
+            HeroNode2 curr1 = head1.next;
+            HeroNode2 curr2 = head2.next;
+
+            //初始化一个新的链表
+        HeroNode2 newHead = new HeroNode2(0, "", "");
+        while (curr1 != null || curr2 != null){
+            if(curr1.getNo() <= curr2.getNo()){
+                curr1.pre = newHead;
+                curr1.next = newHead.next;
+                if(newHead.next != null){
+                    newHead.next.pre = curr1;
+                }
+                newHead.next = curr1;
+                curr1 = curr1.next;
+            }else{
+                curr2.pre = newHead;
+                curr2.next = newHead.next;
+                if(newHead.next != null){
+                    newHead.next.pre = curr1;
+                }
+                newHead.next = curr1;
+                curr2 = curr2.next;
+            }
+        }
+
+        return newHead;
+    }
 
     public static HeroNode2 mergeLink(HeroNode2 head1, HeroNode2 head2){
 
