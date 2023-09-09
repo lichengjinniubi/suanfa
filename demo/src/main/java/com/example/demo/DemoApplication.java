@@ -3,6 +3,7 @@ package com.example.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,6 +14,9 @@ public class DemoApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(DemoApplication.class, args);
+
+		Map aa = new HashMap();
+		aa.put("aa",1);
 
 		Map<String, String> map = new LinkedHashMap<>(10,1,true);
 		map.put("apple", "苹果");
