@@ -22,8 +22,8 @@ public class CircleSingleListDemo {
         CirccleSingleLinkedList singleLinkedList = new CirccleSingleLinkedList();
         singleLinkedList.addV3(hero1);
         singleLinkedList.addV3(hero2);
-        singleLinkedList.addV3(hero4);
         singleLinkedList.addV3(hero3);
+        singleLinkedList.addV3(hero4);
         //singleLinkedList.addV2(5);
 
 
@@ -46,8 +46,8 @@ public class CircleSingleListDemo {
 //
 
         singleLinkedList.list();
-        System.out.println("反转链表开始");
-        singleLinkedList.reversePrintV2();
+//        System.out.println("反转链表开始");
+//        singleLinkedList.reversePrintV2();
         //singleLinkedList.list();
 //
 //        System.out.println("逆序打印链表");
@@ -71,7 +71,7 @@ public class CircleSingleListDemo {
 //        singleLinkedList.listV2(newHead);
 
 
-        singleLinkedList.list();
+        //singleLinkedList.list();
     }
 
 }

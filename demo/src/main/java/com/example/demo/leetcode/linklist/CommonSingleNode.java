@@ -24,4 +24,10 @@ public class CommonSingleNode {
         this.value = value;
         this.isTail = isTail;
     }
+
+
+    @Override
+    public String toString() {
+        return "CommonSingleNode [value=" + value + ", isTail =" + isTail  + "]";
+    }
 }

@@ -23,6 +23,15 @@ public class LinkIfHasCircle {
         listOperate.add(node7);
         listOperate.add(node8);
         listOperate.add(node9);
+
+        listOperate.formatCircleSingleLink();
+
+        listOperate.list();
+
+
+        System.out.println(listOperate.isHasCircle());
+
+
     }
 
 
@@ -30,10 +39,29 @@ public class LinkIfHasCircle {
 
 class LinkIfHalfCircleOperate {
 
-    CommonSingleNode head;
+    CommonSingleNode head = null;
 
+    CommonSingleNode tmp = null;
 
-    public
+    public LinkIfHalfCircleOperate(CommonSingleNode node){
+        this.head = node;
+        this.tmp = head;
+    }
+
+    public void list(){
+
+        CommonSingleNode tmp = head;
+        while (tmp != null) {
+            System.out.println(tmp);
+            System.out.println(tmp.getNext());
+            System.out.println("&&&&&&&&&&");
+            if(tmp.getIsTail()){
+                break;
+            }
+
+            tmp = tmp.getNext();
+        }
+    }
 
 
     public void add(CommonSingleNode node){
@@ -53,6 +81,22 @@ class LinkIfHalfCircleOperate {
     }
 
 
+//    public void add(CommonSingleNode node){
+//        if(head == null){ //第一个节点如果为null,表示整个链表为空
+//            head = node;
+//            node.setNext(head);
+//            tmp = head;
+//        }else{
+//            tmp.setNext(node);
+//            node.setNext(head);
+//            tmp = node;
+//
+//        }
+//    }
+
+    /**
+     * 把尾节点指向指定的节点
+     */
     public void formatCircleSingleLink(){
         String value = "3";
         CommonSingleNode tmp = head;
@@ -71,21 +115,30 @@ class LinkIfHalfCircleOperate {
     }
 
 
-    public void list(CommonSingleNode node){
-        CommonSingleNode tmp = node;
-        System.out.println("*&*&*&*&(&(&(&(*&**");
-        // System.out.println(tmp);
-        while (true){
+    /**
+     * 使用快慢指针来判断是否有环
+     * @return
+     */
+    public Boolean isHasCircle(){
+        CommonSingleNode slow = head;
+        CommonSingleNode fase = head.getNext();
 
-            System.out.println(tmp.getValue());
-            System.out.println(tmp.getNext());
-            System.out.println(tmp.getRandom());
-            System.out.println("&&&&&");
-            tmp = tmp.getNext();
-            if(tmp == null){
-                break;
+        System.out.println("*********");
+        System.out.println(slow.getValue());
+        System.out.println(fase.getValue());
+        while (!slow.getValue().equals(fase.getValue())){
+
+
+
+           slow = slow.getNext();
+           fase = fase.getNext().getNext();
+            if(fase == null || fase.getNext() == null){
+                return false;
             }
         }
+
+        return true;
     }
+
 
 }
