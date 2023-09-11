@@ -14,7 +14,14 @@ public class CommonSingleNode {
 
     private CommonSingleNode random;
 
+    private Boolean isTail = false;
+
     public CommonSingleNode(String value) {
         this.value = value;
+    }
+
+    public CommonSingleNode(String value, boolean isTail) {
+        this.value = value;
+        this.isTail = isTail;
     }
 }
