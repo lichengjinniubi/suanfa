@@ -81,19 +81,6 @@ class LinkIfHalfCircleOperate {
     }
 
 
-//    public void add(CommonSingleNode node){
-//        if(head == null){ //第一个节点如果为null,表示整个链表为空
-//            head = node;
-//            node.setNext(head);
-//            tmp = head;
-//        }else{
-//            tmp.setNext(node);
-//            node.setNext(head);
-//            tmp = node;
-//
-//        }
-//    }
-
     /**
      * 把尾节点指向指定的节点
      */

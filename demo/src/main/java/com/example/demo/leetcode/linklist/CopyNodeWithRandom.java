@@ -95,12 +95,6 @@ class ListOperate{
             //System.out.println(newTmp);
             Random random = new Random();
             int x = random.nextInt(8 - 1 + 1) + 1;
-//            System.out.println(x);
-//            System.out.println(String.valueOf(x));
-//            System.out.println(map);
-//            System.out.println(String.valueOf(x));
-//            System.out.println((CommonSingleNode)map.get(String.valueOf(x)));
-//            System.out.println(newTmp);
             int tmpValue = Integer.valueOf(newTmp.getValue());
 
             String key = String.valueOf(x);
