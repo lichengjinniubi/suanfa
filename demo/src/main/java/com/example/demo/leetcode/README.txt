@@ -4,3 +4,4 @@ MergeLinkedList : 合并两个有序链表 对应21号
 DeleteTargetNode : 删除链表中倒数n个节点
 ReversePartLinkNode : 反转一个链表中的部分
 DeleteRepeatNode : 删除链表中重复节点
+MoveLinkListNode : 向右移动链表几个节点
