@@ -2,6 +2,9 @@ package com.example.demo.leetcode.linklist;
 
 import lombok.Data;
 
+/**
+ * 反转整个链表中的一部分
+ */
 public class ReversePartLinkNode {
 
 
