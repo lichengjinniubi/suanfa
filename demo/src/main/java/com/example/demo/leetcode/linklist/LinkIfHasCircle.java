@@ -29,7 +29,7 @@ public class LinkIfHasCircle {
         listOperate.list();
 
 
-        System.out.println(listOperate.isHasCircle());
+        //System.out.println(listOperate.isHasCircle());
 
 
     }
@@ -85,7 +85,7 @@ class LinkIfHalfCircleOperate {
      * 把尾节点指向指定的节点
      */
     public void formatCircleSingleLink(){
-        String value = "3";
+        String value = "1";
         CommonSingleNode tmp = head;
         CommonSingleNode tail = null;
         CommonSingleNode targetNode = null;
