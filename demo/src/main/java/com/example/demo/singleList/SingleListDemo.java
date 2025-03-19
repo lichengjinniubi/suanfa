@@ -22,11 +22,11 @@ public class SingleListDemo {
         SingleLinkedList singleLinkedList = new SingleLinkedList();
 
         //正常添加节点
-//        singleLinkedList.addV2(hero1);
-//        singleLinkedList.addV2(hero2);
-//        singleLinkedList.addV2(hero4);
-//        singleLinkedList.addV2(hero3);
-//        singleLinkedList.addV2(hero5);
+        singleLinkedList.addV2(hero1);
+        singleLinkedList.addV2(hero2);
+        singleLinkedList.addV2(hero3);
+        singleLinkedList.addV2(hero4);
+        singleLinkedList.addV2(hero5);
 
 
         //按顺序添加节点
@@ -50,30 +50,30 @@ public class SingleListDemo {
 //        System.out.println("链表的长度是"+singleLinkedList.getLength());
 //
 //
-//        System.out.println("反转链表开始");
-//        singleLinkedList.reversePrintV3(singleLinkedList.head);
-//        singleLinkedList.list();
+        System.out.println("反转链表开始");
+        HeroNode heroNode = singleLinkedList.reversePrintV3(singleLinkedList.head);
+        singleLinkedList.listV2(heroNode);
 //
 //        System.out.println("逆序打印链表");
 //        singleLinkedList.reversePrintV1(singleLinkedList.head);
 
 
 
-        SingleLinkedList singleLinkedListV1 = new SingleLinkedList();
-        singleLinkedListV1.addByOrder(hero1);
-        singleLinkedListV1.addByOrder(hero3);
-        singleLinkedListV1.addByOrder(hero5);
-        singleLinkedListV1.addByOrder(hero7);
-
-        SingleLinkedList singleLinkedListV2 = new SingleLinkedList();
-        singleLinkedListV2.addByOrder(hero2);
-        singleLinkedListV2.addByOrder(hero4);
-        singleLinkedListV2.addByOrder(hero6);
-        singleLinkedListV2.addByOrder(hero8);
-        System.out.println("合并两个有序链表");
-        HeroNode newHead = singleLinkedList.mergeLink(singleLinkedListV1.getHead(), singleLinkedListV2.getHead());
-        System.out.println(newHead);
-        singleLinkedList.listV2(newHead);
+//        SingleLinkedList singleLinkedListV1 = new SingleLinkedList();
+//        singleLinkedListV1.addByOrder(hero1);
+//        singleLinkedListV1.addByOrder(hero3);
+//        singleLinkedListV1.addByOrder(hero5);
+//        singleLinkedListV1.addByOrder(hero7);
+//
+//        SingleLinkedList singleLinkedListV2 = new SingleLinkedList();
+//        singleLinkedListV2.addByOrder(hero2);
+//        singleLinkedListV2.addByOrder(hero4);
+//        singleLinkedListV2.addByOrder(hero6);
+//        singleLinkedListV2.addByOrder(hero8);
+//        System.out.println("合并两个有序链表");
+//        HeroNode newHead = singleLinkedList.mergeLink(singleLinkedListV1.getHead(), singleLinkedListV2.getHead());
+//        System.out.println(newHead);
+//        singleLinkedList.listV2(newHead);
 
         //singleLinkedList.list();
     }
@@ -266,7 +266,6 @@ class SingleLinkedList {
 
     public void listV2(HeroNode head){
 
-
         HeroNode tmp = head.next;
 
         while(true){
@@ -331,9 +330,9 @@ class SingleLinkedList {
 
 
 
-    public static void reversePrintV3(HeroNode head){
+    public static HeroNode reversePrintV3(HeroNode head){
         if(head.next == null || head.next.next == null){
-            return;
+            return head;
         }
 
         HeroNode reverNode = new HeroNode(0, "", "");
@@ -347,10 +346,12 @@ class SingleLinkedList {
         }
 
         head.next = reverNode.getNext();
+        return head;
     }
     /**
      * 反转链表
      * @param head
+     *
      */
     public static void reversePrintV2(HeroNode head){
             //只有头节点或者只有一个节点，没必要进行反转
@@ -374,6 +375,20 @@ class SingleLinkedList {
             //之前链表头节点的下一个指针指向新链表头节点的下一个指针
             head.next = reverseNode.getNext();
     }
+
+
+//    public static void reverseLink(HeroNode head){
+//        if(head.next == null || head.next.next == null){
+//            return;
+//        }
+//
+//        HeroNode curr = head.next;
+//        HeroNode next  = null;
+//        while (curr != null){
+//            next = curr.next;
+//            curr.next =
+//        }
+//    }
 
     /**
      * 合并两个链表
