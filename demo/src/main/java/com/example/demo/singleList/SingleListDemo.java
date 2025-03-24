@@ -51,7 +51,7 @@ public class SingleListDemo {
 //
 //
         System.out.println("反转链表开始");
-        HeroNode heroNode = singleLinkedList.reversePrintV3(singleLinkedList.head);
+        HeroNode heroNode = singleLinkedList.reverseLink(singleLinkedList.head);
         singleLinkedList.listV2(heroNode);
 //
 //        System.out.println("逆序打印链表");
@@ -346,6 +346,25 @@ class SingleLinkedList {
         }
 
         head.next = reverNode.getNext();
+        return head;
+    }
+
+
+    public static HeroNode reverseLink(HeroNode head){
+        if(head.next == null || head.next.next == null){
+            return head;
+        }
+
+        HeroNode newHeroNode = new HeroNode(0, "", "");
+        HeroNode curr = head.next;
+        HeroNode next = null;
+        while (curr != null){
+            next = curr.next;
+            curr.next = newHeroNode.next;
+            newHeroNode.next = curr;
+            curr = next;
+        }
+        head.next = newHeroNode.next;
         return head;
     }
     /**

@@ -23,11 +23,12 @@ public class DoubleListDemo {
 //        singleLinkedList.add(hero4);
 //        singleLinkedList.add(hero3);
         //顺序添加节点
-//        singleLinkedList.addByOrder(hero1);
-//        singleLinkedList.addByOrder(hero2);
-//        singleLinkedList.addByOrder(hero4);
-//        singleLinkedList.addByOrder(hero3);
-//        singleLinkedList.addByOrder(hero5);
+        singleLinkedList.addByOrderV2(hero1);
+        singleLinkedList.addByOrderV2(hero2);
+        singleLinkedList.addByOrderV2(hero4);
+        singleLinkedList.addByOrderV2(hero3);
+        singleLinkedList.addByOrderV2(hero5);
+        singleLinkedList.listV2(singleLinkedList.getHead());
 
 
 //        System.out.println("修改操作开始");
@@ -53,20 +54,20 @@ public class DoubleListDemo {
 
 
         //合并两个双向链表
-        DoubleLinkedList singleLinkedListV1 = new DoubleLinkedList();
-        singleLinkedListV1.addByOrder(hero1);
-        singleLinkedListV1.addByOrder(hero3);
-        singleLinkedListV1.addByOrder(hero5);
-        singleLinkedListV1.addByOrder(hero7);
-
-        DoubleLinkedList singleLinkedListV2 = new DoubleLinkedList();
-        singleLinkedListV2.addByOrder(hero2);
-        singleLinkedListV2.addByOrder(hero4);
-        singleLinkedListV2.addByOrder(hero6);
-        singleLinkedListV2.addByOrder(hero8);
-        System.out.println("合并两个有序链表");
-        HeroNode2 newHead = singleLinkedList.mergeLink(singleLinkedListV1.getHead(), singleLinkedListV2.getHead());
-        singleLinkedList.listV2(newHead);
+//        DoubleLinkedList singleLinkedListV1 = new DoubleLinkedList();
+//        singleLinkedListV1.addByOrder(hero1);
+//        singleLinkedListV1.addByOrder(hero3);
+//        singleLinkedListV1.addByOrder(hero5);
+//        singleLinkedListV1.addByOrder(hero7);
+//
+//        DoubleLinkedList singleLinkedListV2 = new DoubleLinkedList();
+//        singleLinkedListV2.addByOrder(hero2);
+//        singleLinkedListV2.addByOrder(hero4);
+//        singleLinkedListV2.addByOrder(hero6);
+//        singleLinkedListV2.addByOrder(hero8);
+//        System.out.println("合并两个有序链表");
+//        HeroNode2 newHead = singleLinkedList.mergeLink(singleLinkedListV1.getHead(), singleLinkedListV2.getHead());
+//        singleLinkedList.listV2(newHead);
     }
 
 }
@@ -95,6 +96,23 @@ class DoubleLinkedList {
             return true;
         }
 
+
+        public boolean addV2(HeroNode2 heroNode){
+            HeroNode2 tmp = head;
+            while (true){
+                if(tmp.getNext() == null){
+                    break;
+                }
+                tmp = tmp.getNext();
+            }
+
+            heroNode.pre = tmp;
+            tmp.setNext(heroNode);
+            return true;
+        }
+
+
+
         //按顺序插入
         public boolean addByOrder(HeroNode2 heroNode){
             HeroNode2 tmp  = head;
@@ -106,12 +124,35 @@ class DoubleLinkedList {
                     break;
                 }
 
-                if(tmp.getNo() <= heroNode.getNo() && tmp.getNext().getNo() > heroNode.getNo()){
+                if(tmp.getNo() <= heroNode.getNo() && tmp.getNext().getNo() >= heroNode.getNo()){
                     heroNode.setNext(tmp.getNext());
                     heroNode.setPre(tmp);
                     tmp.getNext().pre = heroNode;
                     tmp.setNext(heroNode);
 
+                }
+                tmp = tmp.getNext();
+            }
+
+            return true;
+        }
+
+        public boolean addByOrderV2(HeroNode2 heroNode){
+            HeroNode2 tmp = head;
+
+            while (true){
+                if(tmp.getNext() == null){
+                    heroNode.pre = tmp;
+                    tmp.next = heroNode;
+                    break;
+                }
+
+                if(heroNode.getNo() >= tmp.getNo() && tmp.getNext().getNo() >= heroNode.getNo()){
+                    heroNode.pre = tmp;
+
+                    tmp.next.pre = heroNode;
+                    heroNode.next = tmp.next;
+                    tmp.next = heroNode;
                     break;
                 }
                 tmp = tmp.getNext();
