@@ -45,10 +45,10 @@ public class CircleSingleListDemo {
 //
 //
 
-        singleLinkedList.list();
-//        System.out.println("反转链表开始");
-//        singleLinkedList.reversePrintV2();
         //singleLinkedList.list();
+        System.out.println("反转链表开始");
+        singleLinkedList.reversePrintV2();
+        singleLinkedList.list();
 //
 //        System.out.println("逆序打印链表");
 //        singleLinkedList.reversePrintV1(singleLinkedList.head);
