@@ -16,6 +16,12 @@ public class CircleSingleListDemoV2 {
         circcleSingleLinkedListV2.add(hero2);
         circcleSingleLinkedListV2.add(hero3);
 
+        //删除数据
+        //circcleSingleLinkedListV2.del(1);
+
+
+        circcleSingleLinkedListV2.update(2, 4);
+
         System.out.println("展示列表");
         circcleSingleLinkedListV2.list();
     }
@@ -50,29 +56,78 @@ class CirccleSingleLinkedListV2 {
 
 
     private HeroNode5 first;
+
+
+    private HeroNode5 tail;
     private HeroNode5 tmp;
+
 
     public HeroNode5 getHead() {
         return head;
     }
 
     public void add(HeroNode5 heroNode5){
-
-        if(first == null){ //第一个节点
+        //第一次处理
+        if(first == null){
             first = heroNode5;
-            heroNode5.setNext(first);
+
+            first.next = first;
             tmp = first;
         }else{
-            tmp.setNext(heroNode5);
+            tmp.next = heroNode5;
             heroNode5.setNext(first);
             tmp = heroNode5;
+        }
+
+        tail = heroNode5;
+    }
+
+    public void del(int num){
+        HeroNode5 tmp = first;
+        if(first.getNo() == num){
+            first = first.getNext();
+            tail.setNext(first);
+        }
+        while (true){
+            if(tmp.next == first){
+                break;
+            }
+
+            if(tmp.getNext().getNo() == num){
+                tmp.setNext(tmp.getNext().getNext());
+                break;
+            }
+
+            tmp = tmp.getNext();
         }
     }
 
 
+    public void update(int oldNum, int newNum){
+
+        tmp = first;
+        while(true){
+            if(tmp.getNo() == oldNum){
+                tmp.setNo(newNum);
+                break;
+            }
+
+            if(tmp == tail){
+                break;
+            }
+
+            tmp = tmp.getNext();
+        }
+    }
+
+
+
+
+
+
+
     public void list(){
         HeroNode5 tmp = first;
-
         while(true){
             System.out.println(tmp);
             System.out.println(tmp.next);

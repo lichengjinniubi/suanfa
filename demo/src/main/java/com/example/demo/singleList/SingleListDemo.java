@@ -27,7 +27,7 @@ public class SingleListDemo {
         singleLinkedList.addV2(hero3);
         singleLinkedList.addV2(hero4);
         singleLinkedList.addV2(hero5);
-
+        singleLinkedList.list();
 
         //按顺序添加节点
 //        singleLinkedList.addByOrder(hero1);
@@ -51,7 +51,7 @@ public class SingleListDemo {
 //
 //
         System.out.println("反转链表开始");
-        HeroNode heroNode = singleLinkedList.reverseLink(singleLinkedList.head);
+        HeroNode heroNode = singleLinkedList.reversePrintV5(singleLinkedList.head);
         singleLinkedList.listV2(heroNode);
 //
 //        System.out.println("逆序打印链表");
@@ -393,6 +393,27 @@ class SingleLinkedList {
             }
             //之前链表头节点的下一个指针指向新链表头节点的下一个指针
             head.next = reverseNode.getNext();
+    }
+
+
+
+    public HeroNode reversePrintV5(HeroNode head){
+        if(head.next == null || head.next.next == null){
+            return head;
+        }
+
+        HeroNode newNode = new HeroNode(0, "", "");
+        HeroNode curr = head.next;
+        HeroNode next = null;
+        while (curr != null){
+            next = curr.next;
+            curr.next = newNode.getNext();
+            newNode.setNext(curr);
+            curr = next;
+        }
+
+        head.next = newNode.getNext();
+        return head;
     }
 
 
