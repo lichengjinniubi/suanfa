@@ -398,22 +398,22 @@ class SingleLinkedList {
 
 
     public HeroNode reversePrintV5(HeroNode head){
-        if(head.next == null || head.next.next == null){
-            return head;
-        }
+       if(head.next == null || head.next.next == null){
+           return head;
+       }
 
-        HeroNode newNode = new HeroNode(0, "", "");
-        HeroNode curr = head.next;
-        HeroNode next = null;
-        while (curr != null){
-            next = curr.next;
-            curr.next = newNode.getNext();
-            newNode.setNext(curr);
-            curr = next;
-        }
+       HeroNode newHead = new HeroNode(0,"","");
+       HeroNode curr = head.next;
+       HeroNode next = null;
+       while (curr != null){
+           next = curr.next;
+           curr.next = newHead.next;
+           newHead.next = curr;
+           curr = next;
+       }
 
-        head.next = newNode.getNext();
-        return head;
+       head.next = newHead.next;
+       return head;
     }
 
 

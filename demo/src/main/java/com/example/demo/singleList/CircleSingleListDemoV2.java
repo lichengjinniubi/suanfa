@@ -19,11 +19,15 @@ public class CircleSingleListDemoV2 {
         //删除数据
         //circcleSingleLinkedListV2.del(1);
 
+        //更新节点
+        //circcleSingleLinkedListV2.update(2, 4);
 
-        circcleSingleLinkedListV2.update(2, 4);
+        //反转链表
 
+        HeroNode5 heroNode5 = circcleSingleLinkedListV2.reverseLink(circcleSingleLinkedListV2.getFirst());
+        System.out.println(heroNode5);
         System.out.println("展示列表");
-        circcleSingleLinkedListV2.list();
+        circcleSingleLinkedListV2.listV2(heroNode5);
     }
 }
 
@@ -64,6 +68,10 @@ class CirccleSingleLinkedListV2 {
 
     public HeroNode5 getHead() {
         return head;
+    }
+
+    public HeroNode5 getFirst() {
+        return first;
     }
 
     public void add(HeroNode5 heroNode5){
@@ -123,10 +131,62 @@ class CirccleSingleLinkedListV2 {
 
 
 
+    public HeroNode5 reverseLink(HeroNode5 first){
+        if(first == null || first == tail){
+            return first;
+        }
+
+        HeroNode5 newHead = new HeroNode5(0, "", "");
+
+        HeroNode5 cur = null;
+
+        HeroNode5 next = null;
+        while(true){
+
+            if(cur == first){
+                break;
+            }
+            cur = cur == null ? first : cur;
+            System.out.println(cur);
+            System.out.println(next);
+            System.out.println(first);
+            System.out.println(tail);
+            System.out.println("^^^^^^^^^^^^^^^^^^");
+            next = cur.getNext();
+            cur.setNext(newHead.getNext());
+            newHead.setNext(cur);
+            cur = next;
+
+
+
+
+        }
+
+        first = newHead.getNext();
+        return first;
+    }
+
+
 
 
 
     public void list(){
+        HeroNode5 tmp = first;
+        while(true){
+            System.out.println(tmp);
+            System.out.println(tmp.next);
+            System.out.println("--------");
+            //判断当前节点是否为null
+            if(tmp.next == first){
+                break;
+            }
+
+            tmp = tmp.getNext();
+        }
+    }
+
+
+    public void listV2(HeroNode5 first){
         HeroNode5 tmp = first;
         while(true){
             System.out.println(tmp);
