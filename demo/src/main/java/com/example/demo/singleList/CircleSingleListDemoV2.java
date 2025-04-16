@@ -8,6 +8,7 @@ public class CircleSingleListDemoV2 {
         HeroNode5 hero1 = new HeroNode5(1, "宋江", "及时雨");
         HeroNode5 hero2 = new HeroNode5(2, "卢俊义", "玉麒麟");
         HeroNode5 hero3 = new HeroNode5(3, "吴用", "智多星");
+        HeroNode5 hero4 = new HeroNode5(4, "吴用", "智多星");
 
         CirccleSingleLinkedListV2 circcleSingleLinkedListV2 = new CirccleSingleLinkedListV2();
 
@@ -15,9 +16,10 @@ public class CircleSingleListDemoV2 {
         circcleSingleLinkedListV2.add(hero1);
         circcleSingleLinkedListV2.add(hero2);
         circcleSingleLinkedListV2.add(hero3);
+        circcleSingleLinkedListV2.add(hero4);
 
         //删除数据
-        //circcleSingleLinkedListV2.del(1);
+        circcleSingleLinkedListV2.del(2);
 
         //更新节点
         //circcleSingleLinkedListV2.update(2, 4);
@@ -141,20 +143,26 @@ class CirccleSingleLinkedListV2 {
         HeroNode5 cur = null;
 
         HeroNode5 next = null;
+        HeroNode5 tail = null;
         while(true){
 
-            if(cur == first){
-                break;
+            if(cur == null){
+                cur = first;
+                tail = first;
             }
-            cur = cur == null ? first : cur;
-            System.out.println(cur);
-            System.out.println(next);
-            System.out.println(first);
-            System.out.println(tail);
-            System.out.println("^^^^^^^^^^^^^^^^^^");
+
+            //cur = cur == null ? first : cur;
             next = cur.getNext();
             cur.setNext(newHead.getNext());
             newHead.setNext(cur);
+            System.out.println("**************");
+            System.out.println(cur);
+            System.out.println(first);
+            System.out.println(tail);
+            if(next == first){
+                tail.setNext(cur);
+                break;
+            }
             cur = next;
 
 
