@@ -151,14 +151,9 @@ class CirccleSingleLinkedListV2 {
                 tail = first;
             }
 
-            //cur = cur == null ? first : cur;
             next = cur.getNext();
             cur.setNext(newHead.getNext());
             newHead.setNext(cur);
-            System.out.println("**************");
-            System.out.println(cur);
-            System.out.println(first);
-            System.out.println(tail);
             if(next == first){
                 tail.setNext(cur);
                 break;

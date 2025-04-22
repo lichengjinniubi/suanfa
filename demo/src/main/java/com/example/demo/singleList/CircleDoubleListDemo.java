@@ -51,8 +51,8 @@ public class CircleDoubleListDemo {
 ////
 ////
         circleDoubleLinkedList.listV3();
-        System.out.println("反转链表开始");
-        circleDoubleLinkedList.reversePrintV2();
+//        System.out.println("反转链表开始");
+//        circleDoubleLinkedList.reversePrintV2();
 //        singleLinkedList.list();
 //
 //        System.out.println("逆序打印链表");
