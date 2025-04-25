@@ -8,7 +8,6 @@ public class Num560 {
         int i = subarraySum(new int[]{1, 1, 1}, 2);
         System.out.println(i);
     }
-
     public static int subarraySum(int[] nums, int k) {
         int count = 0, pre = 0;
         HashMap < Integer, Integer > mp = new HashMap<>();
