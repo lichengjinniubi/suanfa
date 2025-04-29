@@ -8,13 +8,16 @@ import java.util.Map;
  * 最小覆盖子串
  */
 class Num76 {
-    Map<Character, Integer> ori = new HashMap<Character, Integer>();
-    Map<Character, Integer> cnt = new HashMap<Character, Integer>();
+    private static Map<Character, Integer> ori = new HashMap<Character, Integer>();
+    private static Map<Character, Integer> cnt = new HashMap<Character, Integer>();
+
+    public static void main(String[] args) {
+        //Num76 solution = new Num76();
+        System.out.println(minWindow("ADOBECODEBANC", "ABC"));
+    }
 
 
-
-
-    public String minWindow(String s, String t) {
+    public static String minWindow(String s, String t) {
         int tLen = t.length();
         for (int i = 0; i < tLen; i++) {
             char c = t.charAt(i);
@@ -43,7 +46,7 @@ class Num76 {
         return ansL == -1 ? "" : s.substring(ansL, ansR);
     }
 
-    public boolean check() {
+    public static boolean check() {
         Iterator iter = ori.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
